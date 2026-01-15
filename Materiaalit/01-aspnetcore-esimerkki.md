@@ -99,6 +99,8 @@ dotnet add package Scalar.AspNetCore
 
 Se lisää mahdollisuuden näyttää API-dokumentaatio UI:na reitissä `/scalar`. 
 
+[Scalar](https://scalar.com/)
+
 Scalar on uudempi tapa dokumentoida API rajapintoja ja toimii Swaggerin korvaajana.
 
 ---
@@ -748,6 +750,8 @@ Testaa:
 # Projektin kansiorakenne (kerrosarkkitehtuuri)
 
 Kun käytämme kerrosarkkitehtuuria (layered architecture), meidän backend-projektin idea on jakaa koodi eri “vastuualueisiin”.
+
+[Layered architecture](https://shanmukhchowdary147.medium.com/understanding-layered-architecture-in-net-core-a433ded129c4)
 
 Lopputuloksena projektissa on tällainen rakenne:
 
