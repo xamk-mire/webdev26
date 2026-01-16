@@ -101,6 +101,8 @@ Se lisää mahdollisuuden näyttää API-dokumentaatio UI:na reitissä `/scalar`
 
 [Scalar](https://scalar.com/)
 
+[Scalar asennus .net](https://scalar.com/products/api-references/integrations/aspnetcore/integration)
+
 Scalar on uudempi tapa dokumentoida API rajapintoja ja toimii Swaggerin korvaajana.
 
 ---
