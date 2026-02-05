@@ -2,7 +2,7 @@
 
 Pieni **.NET 10 Web API** - ja **React + TypeScript** -sovellus, joka on tietoisesti **huonosti suunniteltu** refaktoroinnin harjoitteluun. Koodia on tarkoituksella vaikea muuttaa, siinä on duplikaatiota ja sitä on vaikea testata. Metodien ja muuttujien nimet ovat **epäjohdonmukaisia ja epäselviä**, jotta koodissa liikkuminen ja muutokset vaikeutuvat.
 
-**→ Yksityiskohtainen refaktoroinnin johdatus ja fullstack-verkkosovellusten refaktorointi: [docs/REFACTOROINTI-JOHDATUS-FI.md](docs/REFACTOROINTI-JOHDATUS-FI.md).**
+**→ Yksityiskohtainen refaktoroinnin johdatus ja fullstack-verkkosovellusten refaktorointi: [02-Refaktorointi.md](../../Materiaalit/02-Refaktorointi.md).**
 
 ---
 
