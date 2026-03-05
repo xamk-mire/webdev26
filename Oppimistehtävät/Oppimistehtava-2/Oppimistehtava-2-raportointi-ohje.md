@@ -2,8 +2,6 @@
 
 Näillä ohjeilla raportoidaan [Oppimistehtävä 2 – tehtävänanto (Backend)](Oppimistehtava-2-tehtavananto.md) suoritus. Kaikki API-kutsut tehdään **Scalar UI**:lla. Jokaisesta vaaditusta pyynnöstä otetaan kuvakaappaus, jossa **response** on selvästi näkyvissä.
 
-Yleisistä raportointiperiaatteista (Scalar UI, kuvakaappauksen sisältö, JWT) voi käyttää myös [yleisiä Raportointiohjeita](Raportointiohjeet.md) (Migraatio-Suunnitelma).
-
 **API-sopimus (tehtävänanto Vaihe 0.3 ja 2):** Laitteen tyyppi (**deviceType**) ja **status** välitetään API:ssa **numeerisina**. deviceType = 0–5 (0=Watering, 1=Light, 2=MoistureSensor, 3=TemperatureSensor, 4=HumiditySensor, 5=LightSensor). Query-parametrit ja request/response-body käyttävät näitä numeerisia arvoja.
 
 ---
