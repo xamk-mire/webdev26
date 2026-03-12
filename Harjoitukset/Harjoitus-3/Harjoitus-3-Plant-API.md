@@ -4,8 +4,8 @@
 
 Tutustut **Plant Mock API** -palveluun ja otat sen käyttöön. Harjoitus opettaa:
 
-- verkossa olevien API:iden tutustumisen ja kokeilun
-- kolmannen osapuolen API:n käynnistämisen
+- verkossa olevien API:ien perustoiminnon
+- kolmannen osapuolen API:n käynnistämisen (self hosted)
 - API-avaimen käytön
 - API:n testaamisen **Scalar API -dokumentaation** avulla
 
