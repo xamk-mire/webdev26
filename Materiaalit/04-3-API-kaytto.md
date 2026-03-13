@@ -33,6 +33,49 @@ Tässä materiaalissa keskitytään erityisesti **kolmannen osapuolen API:iden k
 
 ---
 
+## 🏗️ Missä kerroksessa kolmannen osapuolen API:ta käytetään?
+
+Kun sovellus käyttää **kerrosarkkitehtuuria** (Controller → Service → Repository), kolmannen osapuolen API-kutsut sijoitetaan tyypillisesti **service-kerrokseen** – ei kontrolleriin eikä repositorioon.
+
+### Kerrosarkkitehtuurin lyhyt kuvaus
+
+| Kerros | Vastuu | Kolmannen osapuolen API? |
+| ------ | ------ | ------------------------ |
+| **Controller** | HTTP-pyynnöt, reititys, statuskoodit | ❌ Ei – delegoi servicelle |
+| **Service** | Liiketoimintalogiikka, validointi, datan yhdistely | ✅ Kyllä – kutsuu ulkoisia API:ja |
+| **Repository** | Oma tietokanta (CRUD-kyselyt) | ❌ Ei – vain oma data |
+| **API-Client / Integration** | HTTP-kutsut ulkoiseen API:hin | ✅ Voi olla erillinen palvelu |
+
+### Datavirta: missä kolmannen osapuolen API tulee mukaan
+
+```
+Frontend (React)  →  Controller  →  Service  →  ┌─ Repository (oma tietokanta)
+                                                └─ IWeatherApiClient / IPlantApiService (kolmannen osapuolen API)
+```
+
+**Esimerkki:** Käyttäjä pyytää sään. Controller vastaanottaa pyynnön → kutsuu `WeatherService`-palvelua → `WeatherService` kutsuu sää-API:a (HttpClient) → palauttaa datan controllerille → controller palauttaa JSON-vastauksen frontendille.
+
+### Miksi service-kerroksessa?
+
+| Sijainti | Miksi sopii / ei sovi |
+| -------- | --------------------- |
+| **Controller** | Controller hoitaa vain HTTP-asioita (reititys, statuskoodit). API-kutsulogiikka (URL, retry, virheenkäsittely) kuuluu muualla. Jos kontrolleri kutsuu API:a suoraan, se paisuu ja vaikeutuu testata. |
+| **Service** | Service on oikea paikka: se orkestroi logiikkaa, voi yhdistää oman tietokannan datan ulkoiseen dataan (esim. "hae tilaus + sää-ennuste") ja kapseloi API-riippuvuuden. Testattavissa (mock IWeatherApiClient). |
+| **Repository** | Repository käsittelee **oman** tietokannan. Ulkoinen HTTP-API on eri vastuualue: se ei ole tallennusta vaan ulkoinen palvelukutsu. Sekoittaminen rikkoo Single Responsibility -periaatteen. |
+
+### Vaihtoehto: erillinen API-client-palvelu
+
+Usein kolmannen osapuolen API:ta kutsutaan **erillisestä client-palvelusta**, jonka service kutsuu:
+
+```
+Controller  →  OrderService  →  IOrderRepository (oma DB)
+            →  OrderService  →  IWeatherApiClient (kolmannen osapuolen API)
+```
+
+`IWeatherApiClient` (tai `IPlantApiService`) on oma rajapintansa: se kapseloi HttpClient-kutsut, API-avaimen ja vastauksen parsinnan. `OrderService` injektoi sekä repositoryn että API-clientin ja yhdistää datan. Tämä tekee servicestä selkeän ja API-clientista helposti vaihdettavan (esim. mock testissä).
+
+---
+
 ## 🧱 HTTP:lla API:ta kutsutaan
 
 Kolmannen osapuolen API:t käyttävät tyypillisesti **REST**-tyylisiä rajapintoja: sama HTTP, jonka selaimet käyttävät.
@@ -200,7 +243,7 @@ var json = await response.Content.ReadAsStringAsync();
 
 1. **Lue dokumentaatio** – endpointit, parametrit, rajoitukset ja virhekoodit.
 2. **Käytä tyypitettyjä malleja** – deserialoi JSON `System.Text.Json` tai Newtonsoft.Json avulla olioihin.
-3. **Erillinen service-kerros** – älä tee API-kutsuja suoraan kontrollerista; käytä esim. `IWeatherService` ja injektoi se.
+3. **Sijoita API-kutsut service-kerrokseen** – älä tee API-kutsuja suoraan kontrollerista; käytä servicen tai erillisen API-clientin (esim. `IWeatherApiClient`) kautta (ks. yllä oleva arkkitehtuuri-kohta).
 4. **Timeout** – aseta `HttpClient.Timeout` tai `CancellationToken`, jotta sovellus ei jumita.
 5. **Logging** – kirjaa epäonnistuneet kutsut ja tärkeät vastaukset, älä kuitenkaan sensitiivistä dataa.
 
@@ -280,10 +323,10 @@ builder.Services.AddScoped<IWeatherService, WeatherService>();
 
 **Kolmannen osapuolen API:n käyttö** tarkoittaa, että sovelluksesi hakee dataa tai palveluita ulkoisesta lähteestä. Tärkeimmät asiat:
 
+✅ Sijoita API-kutsut **service-kerrokseen** (tai erilliseen API-client-palveluun) – ei kontrolleriin eikä repositorioon  
 ✅ Käytä **IHttpClientFactory** ja **HttpClient** – älä luo uutta HttpClientia per pyyntö  
 ✅ Säilytä **API-avaimet turvallisesti** (config, env, User Secrets)  
 ✅ Tarkista **statuskoodit** ja käsittele virheet (401, 429, 500)  
-✅ Sijoita API-kutsulogiikka **erilliseen service-kerrokseen**  
 ✅ Noudata **rate limitejä** ja harkitse välimuistia  
 ✅ Lue **API:n dokumentaatio** – endpointit ja rajoitukset vaihtelevat palveluittain
 
