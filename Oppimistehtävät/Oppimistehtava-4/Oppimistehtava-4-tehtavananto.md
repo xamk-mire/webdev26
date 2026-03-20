@@ -1,5 +1,14 @@
 # Oppimistehtävä 4: Plant Mock API -integraatio
 
+## Linkkejä hyödyllisiin materiaaleihin
+
+  - https://learn.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-10.0
+  - https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines
+  - https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-10.0
+  - https://learn.microsoft.com/en-us/dotnet/core/resilience/http-resilience?tabs=dotnet-cli
+  - https://learn.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-10.0
+  - https://learn.microsoft.com/en-us/dotnet/core/extensions/caching
+
 ## Johdanto
 
 Tämä tehtävänanto on **jatkoa** [Oppimistehtävälle 3](../Oppimistehtava-3/Oppimistehtava-3-tethavananto.md). Tavoitteena on integroida **Plant Mock API** ([Harjoitus 3](../../Harjoitukset/Harjoitus-3/Harjoitus-3-Plant-API.md)) olemassa olevaan moisture-sovellukseen niin, että kasvien ja laitteiden **luonnissa sekä päivityksessä** voidaan hyödyntää Plant Mock API:sta saatavaa dataa.
